@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<html lang="en">
+<head>
+
+<title>Madlibs Game</title>
+<link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Amiri' rel='stylesheet' type='text/css' >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="icon" href="../favicon.png">
+<style>
+.main {
+  text-align: center;
+  font-family: 'Amiri', cursive;
+  font-size: 30px;
+  background: #e6eaf0;
+  padding-top: 50px;
+  height: 200px;    
+}
+button {
+  margin: 40px;
+}
+input {
+  font-size: 24px;
+}
+.fill {
+  background:  #232323;
+  color:#e6eaf0;
+  border-bottom: 2px white;
+  font-family: 'Special Elite', cursive;
+  margin: 4px;
+  padding: 0 6px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="prompt"></div>
+<button>Next</button>
+
+<script>
+// List of prompts for the user
+var prompts = [
+	'Type your name',
+	'Type an adjective',
+	'Type a noun'
+   ];
+
+var answers=[];
+// Keep track of current prompt we're on
+var currentPrompt = 0;
+
+// A function that will call the next prompt
+var nextPrompt = function() {
+  //if there's no answer in the form
+  if (currentPrompt != 0){
+    answers.push($('input').val());
+  }
+	// if there is a next prompt
+	if (currentPrompt < prompts.length) {
+		// put first prompt in all html elements with class 
+		$('.prompt').html(prompts[currentPrompt] +'<br><input type="text" label="input">');
+		// move the next prompt into variable currentPrompt 
+		currentPrompt = currentPrompt + 1;
+	}
+	//or else if we're at the end of the array
+	else {
+		// put a new message into the html.
+		showFinal();
+	}
+}
+
+//puts user answers into HTML
+var showFinal = function() {
+  $('.prompt').html('Let me tell you the tale of <span class="fill">'+answers[0]+'</span> and the <span class="fill">'+answers[1]+'</span> <span class="fill">'+answers[2]+'</span>.');
+  // hide the button
+  $('button').hide();
+}
+// run nextPrompt function when button is clicked
+$('button').click(function() {
+	nextPrompt();
+});
+
+// Show the first prompt as soon as js loads
+nextPrompt();
+</script>
+
+</body>
+</html>
